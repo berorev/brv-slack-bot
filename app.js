@@ -1,12 +1,12 @@
-const express = require('express');
+const { RTMClient } = require('@slack/rtm-api');
 
-const app = express();
+const token = process.env.SLACK_TOKEN; // oauth access token
+const rtm = new RTMClient(token);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!!');
+rtm.on('message', ({ text, channel }) => {
+  rtm.sendMessage(`You said '${text}'`, channel);
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, '0.0.0.0', () => {
-  console.log(`brv-slack-bot listening on port ${port}.`);
-});
+(async () => {
+  await rtm.start();
+})();
