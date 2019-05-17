@@ -5,7 +5,7 @@ const { RTMClient } = require('@slack/rtm-api');
 const app = express();
 
 app.get('/*', (req, res) => {
-  res.send(`path: ${req.path}<br>query: ${req.query}`);
+  res.send(`path: ${req.path}<br>\nquery: ${JSON.stringify(req.query, null, 2)}`);
 });
 
 const port = process.env.PORT || 3000;
